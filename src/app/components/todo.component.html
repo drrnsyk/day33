@@ -1,0 +1,50 @@
+<form [formGroup]="todoForm" (ngSubmit)="submitForm()">
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" formControlName="name"></td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td><input type="text" formControlName="email"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button type="button" (click)="addTask()">Add Task</button>
+                <button type="button" (click)="clearForm()">Clear Form</button>
+            </td>
+        </tr>
+    </table>
+
+    <br>
+
+    <table *ngIf="taskArray.controls.length > 0">
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Priority</th>
+            </tr>
+        </thead>
+        <tbody formArrayName="tasks">
+            <tr *ngFor="let t of taskArray.controls; let i = index" [formGroupName]="i">
+                <td><input type="text" formControlName="task"></td>
+                <td>
+                    <select formControlName="priority">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </td>
+                <td>
+                    <button type="button" (click)="deleteTask(i)">Delete Task</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table>
+        <!-- <button type="submit">Save Form</button> -->
+        <ng-content></ng-content>
+    </table>
+</form>
